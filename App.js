@@ -1,114 +1,129 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import * as React from 'react'
+import { Text, View, Image } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+  trangChu, muaHang, qrCode, taiKhoan, tuVan, trangChu1, muaHang1, qrCode1, taiKhoan1, tuVan1,
+} from './assets/icon'
 
-const App: () => React$Node = () => {
+function TrangChu() {
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>trang chu!</Text>
+    </View>
+  )
+}
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
+function MuaSam() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>mua sam!</Text>
+    </View>
+  )
+}
+function QrCode() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>qr code!</Text>
+    </View>
+  )
+}
 
-export default App;
+function TuVan() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>tu van!</Text>
+    </View>
+  )
+}
+
+function TaiKhoan() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>tai khoan!</Text>
+    </View>
+  )
+}
+
+const BottomTabs = createBottomTabNavigator()
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <BottomTabs.Navigator
+        initialRouteName="Home"
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused }) => {
+            let iconName
+
+            if (route.name === 'Home') {
+              iconName = focused
+                ? trangChu1
+                : trangChu
+            } else if (route.name === 'Shoping') {
+              iconName = focused
+                ? muaHang1
+                : muaHang
+            } else if (route.name === 'Scan') {
+              iconName = focused
+                ? qrCode1
+                : qrCode
+            } else if (route.name === 'Advisory') {
+              iconName = focused
+                ? tuVan1
+                : tuVan
+            } else if (route.name === 'User') {
+              iconName = focused
+                ? taiKhoan1
+                : taiKhoan
+            }
+
+            // You can return any component that you like here!
+            return <Image source={iconName} style={{ height: 27, width: 27 }} />
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: '#F39C12',
+          inactiveTintColor: 'gray',
+        }}
+      >
+        <BottomTabs.Screen
+          name="Home"
+          component={TrangChu}
+          options={{
+            tabBarLabel: 'Trang chủ',
+          }}
+        />
+        <BottomTabs.Screen
+          name="Shoping"
+          component={MuaSam}
+          options={{
+            tabBarLabel: 'Mua hàng',
+          }}
+        />
+        <BottomTabs.Screen
+          name="Scan"
+          component={QrCode}
+          options={{
+            upperCaseLabel: false,
+          }}
+        />
+        <BottomTabs.Screen
+          name="Advisory"
+          component={TuVan}
+          options={{
+            tabBarLabel: 'Tư vấn',
+          }}
+        />
+        <BottomTabs.Screen
+          name="User"
+          component={TaiKhoan}
+          options={{
+            tabBarLabel: 'Tài khoản',
+          }}
+        />
+      </BottomTabs.Navigator>
+    </NavigationContainer>
+  )
+}
